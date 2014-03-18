@@ -1,0 +1,54 @@
+;; User
+[{:db/id #db/id[:db.part/db]
+  :db/ident :user/username
+  :db/doc "User's login"
+  :db/valueType :db.type/string
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+ {:db/id #db/id[:db.part/db]
+  :db/ident :user/password
+  :db/doc "User's password"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+ {:db/id #db/id[:db.part/db]
+  :db/ident :user/name
+  :db/doc "User's real name"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+ {:db/id #db/id[:db.part/db]
+  :db/ident :user/email
+  :db/doc "User's e-mail "
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+ {:db/id #db/id[:db.part/db]
+  :db/ident :user/roles
+  :db/doc "User's roles"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db.install/_attribute :db.part/db}
+ {:db/id #db/id[:db.part/db]
+  :db/ident :user/type
+  :db/doc "Type user"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+ {:db/id #db/id[:db.part/db]
+  :db/ident :user/optlock
+  :db/doc "Optimistic locking version"
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+ ;; user type enum values
+ [:db/add #db/id[:db.part/user] :db/ident :user.type/operator]
+ [:db/add #db/id[:db.part/user] :db/ident :user.type/system]
+ [:db/add #db/id[:db.part/user] :db/ident :user.type/application]
+
+ ;; auth enum values
+ [:db/add #db/id[:db.part/user] :db/ident :omlab.auth/admin]
+ [:db/add #db/id[:db.part/user] :db/ident :omlab.auth/user]
+]

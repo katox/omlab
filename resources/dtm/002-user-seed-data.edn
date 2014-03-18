@@ -1,0 +1,9 @@
+[{:db/id #db/id[:db.part/user]
+  :user/username "root"
+  :user/password "$2a$10$Hfb7nFYC8s7f7gX5wxsOZ.YvoFe7NVyc4jvOwITNR4ZDLNGOCO8Ci" ; pass
+  :user/email "root@localhost"
+  :user/roles #{:omlab.auth/admin}
+  :user/name "Omlab Administrator"
+  :user/type :user.type/operator
+  :user/optlock 0}
+]

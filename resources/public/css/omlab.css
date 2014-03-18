@@ -1,0 +1,102 @@
+/* custom omlab styling */
+.footer {
+    text-align: center;
+    padding: 10px 0px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+
+.notification {
+    position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  height: 0;
+    text-align: center;
+}
+
+.notification > div {
+    display: inline-block; 
+    text-align: left;
+}
+
+.ntf-info > div {
+	  background-color: #fefe00;
+}
+
+.ntf-error > div {
+	  background-color: #FB5555;
+}
+
+.ntf-success > div {
+	  background-color: #79EA73;
+}
+
+.user-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #efefef;
+}
+
+.omlab-field {
+    padding: 0px;
+    list-style: none;
+    line-height: 1.5em;
+}
+
+a.omlab-field {
+    color: #333;
+}
+
+span.omlab-label {
+    float: left;
+    width: 120px;
+    font-weight: lighter;
+    font-style: oblique;
+}
+
+label.omlab-label {
+    margin-bottom: 0px;
+}
+
+.well-thin {
+    margin-bottom: 10px;
+}
+
+.btn-bottom-spacing {
+    margin-bottom: 15px;
+}
+
+.collapse-icon {
+    color: #428bca;
+}
+
+.input-medium {
+    font-weight: normal;
+    width: 210px;
+}
+
+.thumbnail-image {
+    width: 60px;
+    height: 60px;
+}
+
+.thumbnail-image-sm {
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    vertical-align: middle;
+    align-content: center;
+}
+
+.thumbnail-image-big {
+    width: 100px;
+    height: 100px;
+    vertical-align: middle;
+    align-content: center;
+}
+
+.profile-img {
+    float: left;
+    margin-right: 10px;
+}
