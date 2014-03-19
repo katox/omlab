@@ -32,7 +32,7 @@
   (testing "no auth"
     (is (= nil (auth-credentials (t/db) "missing-user"))))
   (testing "root access"
-    (is (= {:username "root", :password "$2a$10$erb66jCAhUc.5yNHY5XyxeCpLlbliRl3zdj5obVdZSCzaZS0u5Lm2", :roles #{:omlab.auth/admin}, :name "Omlab Administrator"}
+    (is (= {:username "root", :password  "$2a$10$Hfb7nFYC8s7f7gX5wxsOZ.YvoFe7NVyc4jvOwITNR4ZDLNGOCO8Ci", :roles #{:omlab.auth/admin}, :name "Omlab Administrator"}
            (auth-credentials (t/db) "root"))))
   (testing "multiple roles"
     (is (= nil
