@@ -101,6 +101,10 @@
 
 (defn password-fields [cursor owner opts]
   (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "PasswordFields"))
+    
     om/IWillMount
     (will-mount [_]
       (om/set-state! owner :password {:first-val "" :retype-val ""}))
@@ -131,8 +135,12 @@
            (dom/div #js {:className "col-md-1"} (dom/b nil "Type"))
            (dom/div #js {:className "col-md-1"} (dom/b nil "Avatar"))))
 
-(defn user-short [{:keys [username] :as user} owner _]
+(defn user-short [{:keys [username] :as user} owner opts]
   (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "UserShort"))
+    
     om/IRenderState
     (render-state [_ {:keys [comm]}]
       (dom/div #js {:className "row"}
@@ -145,18 +153,28 @@
                (dom/div #js {:className "col-md-1"} (ldom/profile-img user :size :small))))))
 
 (defn user-type-combo [{:keys [type] :as user} owner opts]
-  (om/component
-   (dom/div #js {:className "omlab-label"}
-            (dom/span #js {:className "omlab-label"} "Type:")
-            (dom/select #js {:className "form-control input-medium"
-                             :value (if type (name type) "")
-                             :onChange (update-value! user :type keyword)}
-                        (into-array
-                         (map #(dom/option #js {:value (name %) :key %} (name %))
-                              (:user-types opts)))))))
-
-(defn user-edit [{:keys [username name email type roles] :as user} owner _]
   (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "UserTypeComboBox"))
+    
+    om/IRender
+    (render [_]  
+      (dom/div #js {:className "omlab-label"}
+               (dom/span #js {:className "omlab-label"} "Type:")
+               (dom/select #js {:className "form-control input-medium"
+                                :value (if type (name type) "")
+                                :onChange (update-value! user :type keyword)}
+                           (into-array
+                            (map #(dom/option #js {:value (name %) :key %} (name %))
+                                 (:user-types opts))))))))
+
+(defn user-edit [{:keys [username name email type roles] :as user} owner opts]
+  (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "UserEdit"))
+    
     om/IWillMount
     (will-mount [_]
       (om/set-state! owner :roles (format/format-roles (:roles user))))
@@ -191,8 +209,12 @@
                           (dom/div #js {:className "col-md-6"}
                                    (ldom/profile-img user :size :big))))))))
 
-(defn user-show [app owner _]
+(defn user-show [app owner opts]
   (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "UserShow"))
+    
     om/IWillMount
     (will-mount [_]
       (let [username (-> app :admin :showing-user)
@@ -247,6 +269,10 @@
 
 (defn user-add [user owner opts]
   (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "UserAdd"))
+    
     om/IWillMount
     (will-mount [_]
       (om/update! user {:type :operator :roles #{:user}})
@@ -287,16 +313,26 @@
 (defn sidebar-menuitem [{:keys [text] :as c}]
   (dom/li #js {:className "list-group-item"} text))
 
-(defn admin-sidebar [app]
-  (om/component
-   (dom/div #js {:className "panel panel-default"}
-            (dom/div #js {:className "panel-heading"}
-                     (dom/b nil "Section"))
-            (dom/ul #js {:className "list-group"}
-                    (sidebar-menuitem {:text "Users"})))))
-
-(defn admin [app owner _]
+(defn admin-sidebar [app owner opts]
   (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "AdminSiderBar"))
+    
+    om/IRender
+    (render [_]
+      (dom/div #js {:className "panel panel-default"}
+               (dom/div #js {:className "panel-heading"}
+                        (dom/b nil "Section"))
+               (dom/ul #js {:className "list-group"}
+                       (sidebar-menuitem {:text "Users"}))))))
+
+(defn admin [app owner opts]
+  (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "Admin"))
+    
     om/IWillMount
     (will-mount [_]
       (let [comm (om/get-state owner :comm)]
@@ -344,8 +380,12 @@
              (dom/div #js {:className "col-md-6"}
                       (ldom/profile-img user-profile :size :big)))))
 
-(defn profile-edit [app owner _]
+(defn profile-edit [app owner opts]
   (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "ProfileEdit"))
+    
     om/IWillMount
     (will-mount [_]
       (load-profile app))

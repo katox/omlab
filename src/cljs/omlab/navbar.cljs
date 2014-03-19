@@ -32,9 +32,15 @@
                           (map #(navbar-menuitem % (:showing-tab app) (get-in app [:current-user :roles]))
                                (:navbar-menu app))))))
 
-(defn navbar [app]
-  (om/component
-   (dom/div #js {:className "navbar navbar-default"}
-            (navbar-header app)
-            (navbar-signed-in app)
-            (navbar-menu app))))
+(defn navbar [app owner opts]
+  (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "Navbar"))
+    
+    om/IRender
+    (render [_]
+      (dom/div #js {:className "navbar navbar-default"}
+               (navbar-header app)
+               (navbar-signed-in app)
+               (navbar-menu app)))))

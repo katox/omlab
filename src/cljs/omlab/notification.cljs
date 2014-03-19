@@ -20,9 +20,15 @@
 (defn hide-notification [app guid]
   (om/transact! app [:notifications] #(dissoc % guid)))
 
-(defn notification-panel [app]
-  (om/component
-   (let [message (second (first (:notifications app)))
-         message-style (when (:type message) (str " ntf-" (name (:type message))))]
-     (dom/div #js {:className (str "notification" message-style)}
-              (dom/div nil (:msg message))))))
+(defn notification-panel [app owner opts]
+  (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "NotificationPanel"))
+    
+    om/IRender
+    (render [_]
+      (let [message (second (first (:notifications app)))
+            message-style (when (:type message) (str " ntf-" (name (:type message))))]
+        (dom/div #js {:className (str "notification" message-style)}
+                 (dom/div nil (:msg message)))))))

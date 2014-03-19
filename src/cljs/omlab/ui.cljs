@@ -63,8 +63,12 @@
   (om/component
    (dom/footer #js {:className "footer"} "© 2014 leafclick s. r. o.")))
 
-(defn omlab-app [app owner]
+(defn omlab-app [app owner opts]
   (reify
+    om/IDisplayName
+    (display-name [_]
+      (or (:react-name opts) "OmlabApp"))
+    
     om/IInitState
     (init-state [_]
       {:comm (chan)})
@@ -75,7 +79,7 @@
         (go (let [user (<! (fetch-current-user app "/ui/current-user"))]
               (om/transact! app #(assoc % :current-user user))))
         (go (while true
-            (let [[type value] (<! comm)]
+              (let [[type value] (<! comm)]
                 (handler/handle-app-event type app value))))))
     om/IRenderState
     (render-state [_ {:keys [comm]}]
