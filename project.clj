@@ -55,6 +55,7 @@
          :plugins [[com.cemerick/austin "0.1.4"]]
          :env {:config-file "dev-resources/config_dev.edn"
                :development true}
+         :injections [(user/init)]
          :cljsbuild {:builds
                      {:none
                       {:source-paths ["src/cljs"]
