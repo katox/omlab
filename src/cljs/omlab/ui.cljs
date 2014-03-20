@@ -60,8 +60,13 @@
    (show-notification app (str "Fetching current user failed. Status code: " status) :type :error)))
 
 (defn footer [app]
-  (om/component
-   (dom/footer #js {:className "footer"} "© 2014 leafclick s. r. o.")))
+  (reify
+    om/IDisplayName
+    (display-name [_] "Footer")
+
+    om/IRender
+    (render [_]
+      (dom/footer #js {:className "footer"} "© 2014 leafclick s. r. o."))))
 
 (defn omlab-app [app owner opts]
   (reify
