@@ -18,9 +18,9 @@
                  ;; CLJS
                  [org.clojure/clojurescript "0.0-2173"]
                  [org.clojure/core.async "0.1.267.0-0d7780-alpha"]
-                 [secretary "1.0.3"]
+                 [secretary "1.1.0"]
                  [cljs-http "0.1.8"]
-                 [om "0.5.2"]
+                 [om "0.5.3"]
                  [inflections "0.9.5" :exclusions [[org.clojure/clojure]
                                                    [commons-codec]]]
                  ;; TEST
