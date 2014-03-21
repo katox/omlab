@@ -26,7 +26,8 @@
 (def app-state
   (atom {:showing-tab :admin
          :notifications (array-map)
-         :navbar-menu [{:text "Admin" :tab "admin/users" :roles #{:admin}}]
+         :navbar-menu [{:text "Lab" :tab "lab" :roles #{:user :admin}}
+                       {:text "Admin" :tab "admin/users" :roles #{:admin}}]
          :users []
          :admin {}
          :new-user {}
@@ -42,7 +43,7 @@
 
 (defroute "/admin/:section" {:keys [section]} (swap! app-state assoc :showing-tab :admin :admin {:section (keyword section) :action :list}))
 
-(defroute "/" {:as params} (secretary/dispatch! "/admin/users"))
+(defroute "/" {:as params} (secretary/dispatch! "/lab"))
 
 (def history (History.))
 
@@ -58,6 +59,16 @@
    [{status :status user :body} (<! (http/get url {:timeout xhr/default-timeout}))]
    (util/update-ids user)
    (show-notification app (str "Fetching current user failed. Status code: " status) :type :error)))
+
+(defn lab [app]
+  (reify
+    om/IDisplayName
+    (display-name [_] "Lab")
+
+    om/IRender
+    (render [_]
+      (dom/div nil
+        (dom/h3 nil "Your awesome lab work!")))))
 
 (defn footer [app]
   (reify
@@ -93,6 +104,7 @@
                  (om/build navbar/navbar app comm-init)
                  (om/build notification/notification-panel app comm-init)
                  (condp = (:showing-tab app)
+                   :lab (om/build lab app comm-init)
                    :admin (om/build user/admin app comm-init)
                    :profile (om/build user/profile-edit app comm-init))
                  (om/build footer app comm-init))))))
