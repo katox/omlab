@@ -1,7 +1,7 @@
 (defproject omlab "0.1.0-SNAPSHOT"
   :description "Omlab playground"
   :url "https://github.com/katox/omlab"
-  :dependencies [[org.clojure/clojure "1.5.1"]
+  :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.1.6"]
                  [hiccup "1.0.5"]
                  [cheshire "5.3.1"]
@@ -12,8 +12,8 @@
                  [fogus/ring-edn "0.2.0"]
                  [com.cemerick/friend "0.2.0"]
                  [clj-time "0.6.0"]
-                 [com.taoensso/timbre "3.1.6" :exclusions [org.clojure/clojure]]
-                 [com.datomic/datomic-free "0.9.4609"]
+                 [com.taoensso/timbre "3.1.6"]
+                 [com.datomic/datomic-free "0.9.4707"]
                  [org.clojure/core.match "0.2.1"]
                  ;; CLJS
                  [org.clojure/clojurescript "0.0-2173"]
@@ -21,7 +21,7 @@
                  [secretary "1.1.0"]
                  [cljs-http "0.1.8"]
                  [om "0.5.3"]
-                 [inflections "0.9.5" :exclusions [[org.clojure/clojure]
+                 [inflections "0.9.6" :exclusions [[org.clojure/clojure]
                                                    [commons-codec]]]
                  ;; TEST
                  [org.clojars.runa/conjure "2.2.0" :scope "test"]
