@@ -19,17 +19,6 @@
         :db.cardinality/many (into #{} (map first result)))
       if-not)))
 
-(defn ref-keyword
-  "Returns db/ident of given attr or e or nil if missing."
-  [db e attr]
-  (when-let [result (seq (d/q '[:find ?v
-                          :in $ ?e ?a
-                          :where
-                          [?e ?a ?en]
-                          [?en :db/ident ?v]]
-                              db e attr))]
-    (-> result ffirst name keyword)))
-
 (def ref-rules
   '[[[ref-keyword ?e ?a ?v]
      [?e ?a ?en] [?en :db/ident ?v]]
