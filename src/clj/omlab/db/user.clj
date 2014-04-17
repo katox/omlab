@@ -77,9 +77,11 @@
         valid-roles (set (map #(ns-keyword "omlab.auth" %) (:roles user)))
         retract-roles (when (:roles user)
                         (->> (q '[:find ?op ?e ?a ?v
-                                  :in $ % ?op ?e ?a
-                                  :where (ref-keyword ?e ?a ?v)]
-                                (d/db conn) db.query/ref-rules :db/retract eid :user/roles)
+                                  :in $ ?op ?e ?ea
+                                  :where [?e ?ea ?en]
+                                         [?ea :db/ident ?a]
+                                         [?en :db/ident ?v]]
+                                (d/db conn) :db/retract eid (d/entid (d/db conn) :user/roles))
                              (remove (fn [[_ _ _ role]] (contains? valid-roles role)))))]
     (try
       @(db.util/atransact-all conn auth-ctx
