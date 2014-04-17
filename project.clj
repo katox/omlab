@@ -13,7 +13,7 @@
                  [com.cemerick/friend "0.2.0"]
                  [clj-time "0.6.0"]
                  [com.taoensso/timbre "3.1.6"]
-                 [com.datomic/datomic-free "0.9.4707"]
+                 [com.datomic/datomic-free "0.9.4724"]
                  [org.clojure/core.match "0.2.1"]
                  ;; CLJS
                  [org.clojure/clojurescript "0.0-2173"]
