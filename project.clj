@@ -7,28 +7,27 @@
                  [cheshire "5.3.1"]
                  [slingshot "0.10.3"]
                  [environ "0.5.0"] 
-                 [ring-server "0.3.1"]
+                 [ring-server "0.3.1" :exclusions [org.clojure/core.incubator]]
                  [ring-basic-authentication "1.0.5"]
                  [fogus/ring-edn "0.2.0"]
-                 [com.cemerick/friend "0.2.0"]
-                 [clj-time "0.7.0"]
+                 [com.cemerick/friend "0.2.0" :exclusions [org.clojure/core.cache commons-codec]]
+                 [clj-time "0.8.0"]
                  [com.taoensso/timbre "3.2.1"]
-                 [com.datomic/datomic-free "0.9.4815.12" :exclusions [org.clojure/clojure]]
+                 [com.datomic/datomic-free "0.9.4815.12" :exclusions [org.clojure/clojure com.google.guava/guava commons-codec]]
                  [org.clojure/core.match "0.2.1"]
                  ;; CLJS
-                 [org.clojure/clojurescript "0.0-2173"]
-                 [org.clojure/core.async "0.1.267.0-0d7780-alpha"]
+                 [org.clojure/clojurescript "0.0-2277"]
+                 [org.clojure/core.async "0.1.303.0-886421-alpha"]
                  [secretary "1.2.0"]
-                 [cljs-http "0.1.8"]
-                 [om "0.6.4"]
-                 [inflections "0.9.9" :exclusions [[org.clojure/clojure]
-                                                   [commons-codec]]]
+                 [cljs-http "0.1.15"]
+                 [om "0.7.1"]
+                 [inflections "0.9.9" :exclusions [org.clojure/clojurecommons-codec]]
                  ;; TEST
                  [org.clojars.runa/conjure "2.2.0" :scope "test"]
                  [org.clojure/test.generative "0.5.1" :scope "test"]]
   :plugins [[lein-ring "0.8.10"]
             [lein-environ "0.5.0"]
-            [lein-cljsbuild "1.0.2"]]
+            [lein-cljsbuild "1.0.3"]]
   
   :uberjar-name "omlab-standalone.jar"
   :ring {:handler omlab.handler/app
@@ -49,10 +48,10 @@
   
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [org.clojure/tools.namespace "0.2.4"]
+                        [org.clojure/tools.namespace "0.2.5"]
                         [ring-mock "0.1.5"]]
          :source-paths ["dev"]
-         :plugins [[com.cemerick/austin "0.1.4"]]
+         ;:plugins [[com.cemerick/austin "0.1.4"]]
          :env {:config-file "dev-resources/config_dev.edn"
                :development true}
          :injections [(user/init)]

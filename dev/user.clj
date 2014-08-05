@@ -12,8 +12,8 @@
    [clojure.test :as test]
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
    [ring.server.standalone :refer [serve]]
-   [cemerick.austin]
-   [cemerick.austin.repls]
+   ;[cemerick.austin]
+   ;[cemerick.austin.repls]
    [datomic.api :as d]
    [omlab.system]
    [omlab.util]
@@ -46,8 +46,10 @@
 
 (defn cljs-repl
   "needs browser tab refresh"
-  ([] (cemerick.austin.repls/cljs-repl @cemerick.austin.repls/browser-repl-env))
-  ([repl-env] (cemerick.austin.repls/cljs-repl repl-env))
+  ([]                                                       ;(cemerick.austin.repls/cljs-repl @cemerick.austin.repls/browser-repl-env)
+   )
+  ([repl-env]                                               ;(cemerick.austin.repls/cljs-repl repl-env)
+   )
   )
 
 (defn start-server
