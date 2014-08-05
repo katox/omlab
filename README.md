@@ -25,6 +25,8 @@ To start a web server on custom port 8080, run
 
     lein ring server 8080
 
+The default dev login is `root`/`root`.
+
 ## Production
 
 To create a production standalone jar run
@@ -34,6 +36,15 @@ To create a production standalone jar run
 Run the server process with (the default port is 3000)
 
     java -jar omlab-standalone.jar
+
+### Testing production build
+
+Create a production uberjar and run it with the test config 
+
+    CONFIG_FILE=dev-resources/config_dev.edn \
+    PORT=4000 \
+    java -jar target/omlab-standalone.jar
+
 
 License
 =======
