@@ -13,7 +13,7 @@
                  [com.cemerick/friend "0.2.0" :exclusions [org.clojure/core.cache commons-codec]]
                  [clj-time "0.8.0"]
                  [com.taoensso/timbre "3.2.1"]
-                 [com.datomic/datomic-free "0.9.4815.12" :exclusions [org.clojure/clojure com.google.guava/guava commons-codec]]
+                 [com.datomic/datomic-free "0.9.4880.2" :exclusions [org.clojure/clojure com.google.guava/guava commons-codec]]
                  [org.clojure/core.match "0.2.1"]
                  ;; CLJS
                  [org.clojure/clojurescript "0.0-2277"]
