@@ -2,31 +2,32 @@
   :description "Omlab playground"
   :url "https://github.com/katox/omlab"
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [compojure "1.1.8"]
+                 [compojure "1.3.1"]
                  [hiccup "1.0.5"]
                  [cheshire "5.3.1"]
-                 [slingshot "0.10.3"]
-                 [environ "0.5.0"] 
+                 [slingshot "0.12.1"]
+                 [environ "1.0.0"]
                  [ring-server "0.3.1" :exclusions [org.clojure/core.incubator]]
                  [ring-basic-authentication "1.0.5"]
                  [fogus/ring-edn "0.2.0"]
                  [com.cemerick/friend "0.2.0" :exclusions [org.clojure/core.cache commons-codec]]
                  [clj-time "0.8.0"]
-                 [com.taoensso/timbre "3.2.1"]
-                 [com.datomic/datomic-free "0.9.4880.2" :exclusions [org.clojure/clojure com.google.guava/guava commons-codec]]
-                 [org.clojure/core.match "0.2.1"]
+                 [com.taoensso/timbre "3.3.1"]
+                 [com.datomic/datomic-free "0.9.5078" :exclusions [org.clojure/clojure com.google.guava/guava commons-codec joda-time]]
+                 [org.clojure/core.match "0.2.2"]
                  ;; CLJS
-                 [org.clojure/clojurescript "0.0-2277"]
-                 [org.clojure/core.async "0.1.303.0-886421-alpha"]
-                 [secretary "1.2.0"]
-                 [cljs-http "0.1.15"]
-                 [om "0.7.1"]
-                 [inflections "0.9.9" :exclusions [org.clojure/clojurecommons-codec]]
+                 [org.clojure/clojurescript "0.0-2411"]
+                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [secretary "1.2.1"]
+                 [cljs-http "0.1.21" :exclusions [commons-codec]]
+                 [om "0.8.0-alpha2"]
+                 [inflections "0.9.13" :exclusions [commons-codec org.clojure/clojurecommons-codec]]
+                 [weasel "0.4.2"]
                  ;; TEST
                  [org.clojars.runa/conjure "2.2.0" :scope "test"]
                  [org.clojure/test.generative "0.5.1" :scope "test"]]
-  :plugins [[lein-ring "0.8.10"]
-            [lein-environ "0.5.0"]
+  :plugins [[lein-ring "0.8.13"]
+            [lein-environ "1.0.0"]
             [lein-cljsbuild "1.0.3"]]
   
   :uberjar-name "omlab-standalone.jar"
@@ -48,10 +49,9 @@
   
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [org.clojure/tools.namespace "0.2.5"]
+                        [org.clojure/tools.namespace "0.2.7"]
                         [ring-mock "0.1.5"]]
          :source-paths ["dev"]
-         ;:plugins [[com.cemerick/austin "0.1.4"]]
          :env {:config-file "dev-resources/config_dev.edn"
                :development true}
          :injections [(user/init)]
@@ -86,6 +86,6 @@
                                   :output-dir "dev-resources/public/js/advanced"
                                   :source-map "dev-resources/public/js/advanced/omlab.js.map"
                                   :optimizations :advanced
-                                  :pretty-print true
+                                  :pretty-print false
                                   :externs ["react/externs/react.js"]}}}}}
    :prod {:env {:development false}}})

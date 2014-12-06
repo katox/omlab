@@ -6,7 +6,7 @@
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [cljs-http.client :as http]
-            [omlab.http :as xhr :include-macros true :refer [go-fetch]]
+            [omlab.http :as xhr :include-macros true :refer-macros [go-fetch]]
             [omlab.util :refer [guid now] :as util]
             [omlab.format :refer [as-str] :as format]
             [omlab.dom :as ldom]
