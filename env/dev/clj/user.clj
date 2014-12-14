@@ -12,13 +12,12 @@
    [clojure.test :as test]
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
    [ring.server.standalone :refer [serve]]
-   ;[cemerick.austin]
-   ;[cemerick.austin.repls]
+   [cemerick.piggieback]
+   [weasel.repl.websocket]
    [datomic.api :as d]
    [omlab.system]
    [omlab.util]
    [omlab.handler]
-   [omlab.view-dev]
    ))
 
 (def system
@@ -46,11 +45,10 @@
 
 (defn cljs-repl
   "needs browser tab refresh"
-  ([]                                                       ;(cemerick.austin.repls/cljs-repl @cemerick.austin.repls/browser-repl-env)
-   )
-  ([repl-env]                                               ;(cemerick.austin.repls/cljs-repl repl-env)
-   )
-  )
+  []
+  (cemerick.piggieback/cljs-repl
+   :repl-env (weasel.repl.websocket/repl-env
+              :ip "0.0.0.0" :port 9001)))
 
 (defn start-server
   "used for starting the server in development mode from REPL"
@@ -74,22 +72,18 @@
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  (alter-var-root #'omlab.view/main-page-body (constantly omlab.view-dev/main-page-body)))
+  )
 
 (defn start
   "Starts the system running, updates the Var #'system."
-  []  
-  (start-server)
-  ;; austin is incompatible with cljs 2173, disable it for now
-  ;; (reset! cemerick.austin.repls/browser-repl-env (cemerick.austin/repl-env))
-  )
+  []
+  (start-server))
 
 (defn stop
   "Stops the system if it is currently running, updates the Var
   #'system."
   []
-  (stop-server)
-  )
+  (stop-server))
 
 (defn go
   "Initializes and starts the system running."

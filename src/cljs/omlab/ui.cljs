@@ -8,6 +8,7 @@
             [cljs-http.client :as http]
             [clojure.string :as string]
             [clojure.browser.repl]
+            [weasel.repl :as repl]
             [omlab.util :refer [guid now] :as util]
             [omlab.http :as xhr :include-macros true :refer-macros [go-fetch]]
             [omlab.format :refer [as-str] :as format]
@@ -20,10 +21,7 @@
            [goog.history EventType]
            [goog.date Date]))
 
-;; Lets you do (prn "stuff") to the console -- don't use with core.async
-(enable-console-print!)
-
-(def app-state
+(defonce app-state
   (atom {:showing-tab :admin
          :notifications (array-map)
          :navbar-menu [{:text "Lab" :tab "lab" :roles #{:user :admin}}
@@ -109,5 +107,6 @@
                    :profile (om/build user/profile-edit app comm-init))
                  (om/build footer app comm-init))))))
 
-(om/root omlab-app app-state
-         {:target (.getElementById js/document "content")})
+(defn main []
+  (om/root omlab-app app-state
+           {:target (.getElementById js/document "content")}))

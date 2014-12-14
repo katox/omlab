@@ -6,11 +6,25 @@
                              [head :refer [wrap-head]])
             [ring.util.response :as resp]))
 
-(defn main-page-body [req]
+(defn main-page-body-dev [req]
+  [:body
+   [:div {:id "content"}
+    [:p "Omlab development version."]]
+   [:script {:src "http://fb.me/react-0.11.2.js" :type "text/javascript"}]
+   [:script {:src "js/out/goog/base.js" :type "text/javascript"}]
+   [:script {:src "js/omlab.js" :type "text/javascript"}]
+   [:script {:type "text/javascript"} "goog.require(\"omlab.dev\");"]])
+
+(defn main-page-body-prod [req]
   [:body
     [:div {:id "content"}
      [:p "Welcome to Omlab."]]
-    [:script {:src "js/omlab.js" :type "text/javascript"}]])
+   [:script {:src "js/omlab.js" :type "text/javascript"}]])
+
+(defn main-page-body [req]
+  (if (environ/env :development)
+    (main-page-body-dev req)
+    (main-page-body-prod req)))
 
 (defn main-page [req]
   (h/html5

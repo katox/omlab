@@ -1,6 +1,7 @@
 (defproject omlab "0.1.0-SNAPSHOT"
   :description "Omlab playground"
   :url "https://github.com/katox/omlab"
+
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.3.1"]
                  [hiccup "1.0.5"]
@@ -26,6 +27,7 @@
                  ;; TEST
                  [org.clojars.runa/conjure "2.2.0" :scope "test"]
                  [org.clojure/test.generative "0.5.1" :scope "test"]]
+
   :plugins [[lein-ring "0.8.13"]
             [lein-environ "1.0.0"]
             [lein-cljsbuild "1.0.3"]]
@@ -38,12 +40,13 @@
   :source-paths ["src/clj" "src/cljs"]
   :test-paths ["test/clj" "test/cljs"]
 
-  :cljsbuild {:builds {:prod
+  :cljsbuild {:builds {:app
                        {:source-paths ["src/cljs"]
                         :compiler {:output-to "resources/public/js/omlab.js"
-                                   :output-dir "target/cljs-tmp"
-                                   :optimizations :advanced
-                                   :pretty-print false
+                                   :output-dir "resources/public/js/out"
+                                   :source-map "resources/public/js/out.js.map"
+                                   :optimizations :none
+                                   :pretty-print true
                                    :preamble ["react/react.min.js"]
                                    :externs ["react/externs/react.js"]}}}}
   
@@ -51,41 +54,16 @@
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                         [org.clojure/tools.namespace "0.2.7"]
                         [ring-mock "0.1.5"]]
-         :source-paths ["dev"]
+         :source-paths ["env/dev/clj"]
          :env {:config-file "dev-resources/config_dev.edn"
                :development true}
-         :injections [(user/init)]
-         :cljsbuild {:builds
-                     {:none
-                      {:source-paths ["src/cljs"]
-                       :compiler {:output-to "dev-resources/public/js/dev/omlab.js"
-                                  :output-dir "dev-resources/public/js/dev"
-                                  :source-map true
-                                  :optimizations :none
-                                  :pretty-print true
-                                  :externs ["react/externs/react.js"]}}
-                      :whitespace
-                      {:source-paths ["src/cljs"]
-                       :compiler {:output-to "dev-resources/public/js/whitespace/omlab.js"
-                                  :output-dir "dev-resources/public/js/whitespace"
-                                  :source-map "dev-resources/public/js/whitespace/omlab.js.map"
-                                  :optimizations :whitespace
-                                  :pretty-print true
-                                  :externs ["react/externs/react.js"]}}
-                      :simple
-                      {:source-paths ["src/cljs"]
-                       :compiler {:output-to "dev-resources/public/js/simple/omlab.js"
-                                  :output-dir "dev-resources/public/js/simple"
-                                  :source-map "dev-resources/public/js/simple/omlab.js.map"
-                                  :optimizations :simple
-                                  :pretty-print true
-                                  :externs ["react/externs/react.js"]}}
-                      :advanced
-                      {:source-paths ["src/cljs"]
-                       :compiler {:output-to "dev-resources/public/js/advanced/omlab.js"
-                                  :output-dir "dev-resources/public/js/advanced"
-                                  :source-map "dev-resources/public/js/advanced/omlab.js.map"
-                                  :optimizations :advanced
-                                  :pretty-print false
-                                  :externs ["react/externs/react.js"]}}}}}
-   :prod {:env {:development false}}})
+         :cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]}}}}
+
+   :prod {:env {:development false}
+          :cljsbuild {:builds {:app {:source-paths ["env/prod/cljs"]
+                                     :compiler
+                                     {:optimizations :advanced
+                                      :pretty-print false}}}}}
+
+   :uberjar {:omit-source true
+             :aot :all}})
