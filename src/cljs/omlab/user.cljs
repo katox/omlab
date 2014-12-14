@@ -45,7 +45,7 @@
   (let [user (get-in @app [:users username])
         params (select-keys user [:username :name :email :type :roles :password :optlock])
         notifo-guid (show-notification app (str "Saving user " (:username user)))]
-    (go (let [res (<! (http/post (str "/admin/user/" username) {:edn-params params :timeout xhr/default-timeout}))]
+    (go (let [res (<! (http/post (str "/admin/user/" username) {:transit-params params :timeout xhr/default-timeout}))]
           (hide-notification app notifo-guid)
           (if (<= 200 (:status res) 299)
             (do
@@ -59,7 +59,7 @@
                  (dissoc profile :password)
                  profile)
         notifo-guid (show-notification app (str "Saving profile of " (:username profile)))]
-    (go (let [{:keys [status] :as res} (<! (http/post "/ui/profile" {:edn-params params :timeout xhr/default-timeout}))]
+    (go (let [{:keys [status] :as res} (<! (http/post "/ui/profile" {:transit-params params :timeout xhr/default-timeout}))]
           (hide-notification app notifo-guid)
           (cond
            (<= 200 status 299)
@@ -79,7 +79,7 @@
   (when-let [username (:username user)]
     (let [params (select-keys user [:username :name :email :type :roles :password])
           notifo-guid (show-notification app (str "Adding user " username))]
-      (go (let [{:keys [status body] :as res} (<! (http/put (str "/admin/user/" username) {:edn-params params :timeout xhr/default-timeout}))]
+      (go (let [{:keys [status body]} (<! (http/put (str "/admin/user/" username) {:transit-params params :timeout xhr/default-timeout}))]
             (hide-notification app notifo-guid)
             (if (<= 200 status 299)
               (do

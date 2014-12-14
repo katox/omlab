@@ -3,7 +3,7 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             (ring.middleware [multipart-params :as mp]
-                             [edn :as me])
+                             [transit :as transit])
             [ring.util.response :as resp]
             [cemerick.friend :as friend]
             [cemerick.friend.credentials :as creds]
@@ -33,22 +33,15 @@
 (defn db []
   (db.util/get-db @system/settings))
 
-(defn edn-response [data]
-  (if-not (nil? data)
-    (-> (resp/response (prn-str data))
-        (resp/content-type "application/edn")
-        (resp/charset "utf-8"))
-    (resp/not-found "Not found")))
-
 (defn wrap-conflicts [handler]
   (fn [req]
     (try+
       (handler req)
       (catch [:type :optlock-conflict] {:keys [entity] :as err}
-              (-> (edn-response {:msg (str "Update conflict for " (name entity) ". Please refresh and try again.") :type :optlock-conflict :err err})
+              (-> (resp/response {:msg (str "Update conflict for " (name entity) ". Please refresh and try again.") :type :optlock-conflict :err err})
                   (resp/status 409)))
       (catch [:type :already-exists] {:keys [entity] :as err}
-              (-> (edn-response {:msg (str "Record already exists for " (name entity) ".") :type :optlock-conflict :err err})
+              (-> (resp/response {:msg (str "Record already exists for " (name entity) ".") :type :optlock-conflict :err err})
                   (resp/status 409))))))
 
 (defn wrap-log-stacktrace
@@ -64,11 +57,11 @@
 
 (defroutes ui-routes
   (GET "/current-user" req
-       (edn-response (-> (friend/current-authentication)
+       (resp/response (-> (friend/current-authentication)
                          (select-keys [:username :name :roles])
                          (util/remove-ns-from-keywords))))
   (GET "/profile" req
-       (edn-response (db.user/user-detail (db) (:username (friend/current-authentication)))))
+       (resp/response (db.user/user-detail (db) (:username (friend/current-authentication)))))
   (POST "/profile" {profile :params}
         (do
           (let [username (:username (friend/current-authentication))
@@ -82,16 +75,16 @@
                   (db.user/update-user (friend/current-authentication) actual-profile)
                   (:db-after)
                   (db.user/user-detail username)
-                  (edn-response))
+                  (resp/response))
               (-> (str "Bad password for profile update for " username)
                   resp/response
                   (resp/status 403)))))))
 
 (defroutes admin-routes
   (GET "/users" req
-       (edn-response (db.user/list-users (db))))
+       (resp/response (db.user/list-users (db))))
   (GET "/user/:username" [username]
-       (edn-response (db.user/user-detail (db) username)))
+       (resp/response (db.user/user-detail (db) username)))
   (POST "/user/:username" {{:keys [username] :as user} :params}
         (do
           (let [password (when (:password user) (creds/hash-bcrypt (:password user)))
@@ -103,7 +96,7 @@
                 (db.user/update-user (friend/current-authentication) actual-user)
                 (:db-after)
                 (db.user/user-detail username)
-                (edn-response)))))
+                (resp/response)))))
   (PUT "/user/:username" {{:keys [username] :as user} :params}
         (do
           (let [hashed-password (creds/hash-bcrypt (:password user))
@@ -113,7 +106,7 @@
                 (db.user/add-user (friend/current-authentication) actual-user)
                 (:db-after)
                 (db.user/user-detail username)
-                (edn-response))))))
+                (resp/response))))))
 
 (defroutes ui*
   (compojure/context "/ui" req
@@ -144,5 +137,6 @@
               public-routes)
       wrap-log-stacktrace
       wrap-conflicts
-      me/wrap-edn-params
+      transit/wrap-transit-params
+      transit/wrap-transit-response
       handler/site))
