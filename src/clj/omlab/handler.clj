@@ -6,9 +6,8 @@
                              [edn :as me])
             [ring.util.response :as resp]
             [cemerick.friend :as friend]
-            (cemerick.friend [workflows :as workflows]
-                             [credentials :as creds])
-            [taoensso.timbre :as timbre :refer [debug info error]]
+            [cemerick.friend.credentials :as creds]
+            [taoensso.timbre :refer [debug info error]]
             [slingshot.slingshot :refer [try+ throw+]]
             [environ.core :as environ]
             [clj-stacktrace.repl :as stacktrace]
