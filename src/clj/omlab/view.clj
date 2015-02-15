@@ -10,7 +10,7 @@
   [:body
    [:div {:id "content"}
     [:p "Omlab development version."]]
-   [:script {:src "http://fb.me/react-0.11.2.js" :type "text/javascript"}]
+   [:script {:src "http://fb.me/react-0.12.2.js" :type "text/javascript"}]
    [:script {:src "js/out/goog/base.js" :type "text/javascript"}]
    [:script {:src "js/omlab.js" :type "text/javascript"}]
    [:script {:type "text/javascript"} "goog.require(\"omlab.dev\");"]])
