@@ -13,7 +13,8 @@
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
    [ring.server.standalone :refer [serve]]
    [cemerick.piggieback]
-   [weasel.repl.websocket]
+   [cljs.repl :as repl]
+   [cljs.repl.browser :as browser]
    [datomic.api :as d]
    [omlab.system]
    [omlab.util]
@@ -46,9 +47,7 @@
 (defn cljs-repl
   "needs browser tab refresh"
   []
-  (cemerick.piggieback/cljs-repl
-   :repl-env (weasel.repl.websocket/repl-env
-              :ip "0.0.0.0" :port 9001)))
+  (repl/repl (browser/repl-env)))
 
 (defn start-server
   "used for starting the server in development mode from REPL"

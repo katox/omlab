@@ -34,11 +34,16 @@ To start a REPL development session run:
 	lein repl
 	(go) ; init and run ring server
 	(load-test-data) ; load a testing data set
-	(cljs-repl)	; create cljs REPL accepting connections at 9001
+	(cljs-repl)	; create cljs REPL accepting connections at 9000
+    ; Compiling client js ...
+    ; Waiting for browser to connect ...
 
 You can now connect to the app at http://localhost:4000 and login
-with default dev credentials. When the application is loaded you should see
-the message `Opened Websocket REPL connection` in javascript Console.
+with default dev credentials. When the application is loaded you 
+and connected should see the message and a new REPL prompt:
+
+  To quit, type: :cljs/quit
+  ClojureScript:cljs.user>
 
 You can now access the browser from the REPL session.
 
@@ -49,6 +54,15 @@ Open a popup dialog in the connected browser:
 
     cljs.user=> (js/alert "Ahoy!")
     nil
+
+You can easily inspect or manipulate the application state 
+
+    ClojureScript:cljs.user> @omlab.ui/app-state
+    ; :showing-tab :lab, :notifications {}, :navbar-menu [{:text "Lab", :tab "lab", 
+    ; :roles #{:admin :user}} {:text "Admin", :tab "admin/users", :roles #{:admin}}],
+    ; :users [], :admin {}, :new-user {}, :user-profile {}, 
+    ; :current-user {:roles #{:admin}, :name "Omlab Administrator", 
+    ; :username "root", :guid ":5"}}
 
 
 ## Production

@@ -15,7 +15,8 @@ pom.xml.asc
 /.idea
 *.iml
 .lein-deps-sum
-.repl
+.repl-*
+*-init.clj
 out/
 dev-resources/public/js/
 resources/public/js/

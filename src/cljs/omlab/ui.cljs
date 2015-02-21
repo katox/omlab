@@ -8,7 +8,6 @@
             [cljs-http.client :as http]
             [clojure.string :as string]
             [clojure.browser.repl]
-            [weasel.repl :as repl]
             [omlab.util :refer [guid now] :as util]
             [omlab.http :as xhr :include-macros true :refer-macros [go-fetch]]
             [omlab.format :refer [as-str] :as format]

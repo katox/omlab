@@ -1,7 +1,7 @@
 (ns omlab.dev
   (:require [omlab.ui :as ui]
-            [weasel.repl :as weasel]))
+            [clojure.browser.repl :as repl]))
 
 (enable-console-print!)
-(weasel/connect "ws://localhost:9001" :verbose true)
+(repl/connect "http://localhost:9000/repl")
 (ui/main)
