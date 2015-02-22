@@ -12,7 +12,6 @@
    [clojure.test :as test]
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
    [ring.server.standalone :refer [serve]]
-   [cemerick.piggieback]
    [cljs.repl :as repl]
    [cljs.repl.browser :as browser]
    [datomic.api :as d]
