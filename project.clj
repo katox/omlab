@@ -2,8 +2,8 @@
   :description "Omlab playground"
   :url "https://github.com/katox/omlab"
 
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [compojure "1.3.2"]
+  :dependencies [[org.clojure/clojure "1.7.0-beta2"]
+                 [compojure "1.3.3"]
                  [hiccup "1.0.5"]
                  [cheshire "5.4.0"]
                  [slingshot "0.12.2"]
@@ -13,19 +13,19 @@
                  [com.cemerick/friend "0.2.0" :exclusions [org.clojure/core.cache commons-codec]]
                  [clj-time "0.9.0"]
                  [com.taoensso/timbre "3.4.0"]
-                 [com.datomic/datomic-free "0.9.5130" :exclusions [org.clojure/clojure com.google.guava/guava commons-codec joda-time]]
+                 [com.datomic/datomic-free "0.9.5153" :exclusions [org.clojure/clojure com.google.guava/guava commons-codec joda-time]]
                  [org.clojure/core.match "0.2.2"]
                  [ring-transit "0.1.3"]
                  ;; CLJS
-                 [org.clojure/clojurescript "0.0-2913"]
+                 [org.clojure/clojurescript "0.0-3211"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
-                 [secretary "1.2.1"]
-                 [cljs-http "0.1.26" :exclusions [commons-codec com.cemerick/austin]]
+                 [secretary "1.2.3"]
+                 [cljs-http "0.1.30" :exclusions [commons-codec com.cemerick/austin]]
                  [org.omcljs/om "0.8.8"]
                  [inflections "0.9.13" :exclusions [commons-codec org.clojure/clojurecommons-codec com.cemerick/austin]]
                  ;; TEST
                  [org.clojars.runa/conjure "2.2.0" :scope "test"]
-                 [org.clojure/test.generative "0.5.1" :scope "test"]]
+                 [org.clojure/test.generative "0.5.2" :scope "test"]]
 
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
@@ -48,10 +48,11 @@
                                    :pretty-print true
                                    :preamble ["react/react.min.js"]
                                    :externs ["react/externs/react.js"]}}}}
+  :clean-targets ^{:protect false} ["target", "resources/public/js/"]
   
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [org.clojure/tools.namespace "0.2.9"]
+                        [org.clojure/tools.namespace "0.2.10"]
                         [ring-mock "0.1.5"]]
          :source-paths ["env/dev/clj"]
          :env {:config-file "dev-resources/config_dev.edn"
