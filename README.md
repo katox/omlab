@@ -86,6 +86,6 @@ Create a production uberjar and run it with the test config
 
 License
 =======
-Copyright © 2012 leafclick s.r.o.
+Copyright © 2012-2016 leafclick s.r.o.
 
 Distributed under the Eclipse Public License, the same as Clojure.
